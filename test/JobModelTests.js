@@ -1,5 +1,5 @@
 /**
- *
+ * @class JobModelTests
  *
  * @author: darryl.west@roundpeg.com
  * @created: 11/6/14 2:11 PM
@@ -39,7 +39,7 @@ describe('JobModel', function() {
             should.exist( job.id );
             should.exist( job.dateCreated );
 
-            job.getPriority().should.equal( JobModel.MEDIUM_PRIORITY );
+            job.getPriority().should.equal( JobModel.NORMAL_PRIORITY );
             job.getStatus().should.equal( JobModel.NEW_STATUS );
         });
 
