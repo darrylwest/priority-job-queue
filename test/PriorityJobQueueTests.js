@@ -21,21 +21,41 @@ describe('ServiceFactory', function() {
     };
 
     describe('#instance', function() {
-        var jobs = new PriorityJobQueue( createOptions() ),
+        var queue = new PriorityJobQueue( createOptions() ),
             methods = [
-                'getJobList'
+                'getJobList',
+                'add',
+                'remove',
+                'createJob',
+                // inherited
+                'addListener',
+                'emit',
+                'listeners',
+                'on',
+                'once',
+                'removeAllListeners',
+                'removeListener',
+                'setMaxListeners'
             ];
 
         it('should create an instance of ServiceFactory', function() {
-            should.exist( jobs );
-            jobs.should.be.instanceof( PriorityJobQueue );
+            should.exist( queue );
+            queue.should.be.instanceof( PriorityJobQueue );
         });
 
         it('should have all known methods by size and type', function() {
-            dash.methods( jobs ).length.should.equal( methods.length );
+            dash.methods( queue ).length.should.equal( methods.length );
             methods.forEach(function(method) {
-                jobs[ method ].should.be.a( 'function' );
+                queue[ method ].should.be.a( 'function' );
             });
+        });
+    });
+
+    describe('createJob', function() {
+        var queue = new PriorityJobQueue( createOptions() );
+
+        it('should create a new job model with id and date created', function() {
+            var job = queue.createJob();
         });
     });
 });
