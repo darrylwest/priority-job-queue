@@ -8,7 +8,7 @@
     "url": "https://github.com/darrylwest/priority-job-queue.git"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "gulp test"
   },
   "keywords": [
     "priority queue",
