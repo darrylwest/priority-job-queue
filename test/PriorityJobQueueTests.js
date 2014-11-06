@@ -7,12 +7,17 @@
 var should = require('chai').should(),
     dash = require('lodash' ),
     MockLogger = require('simple-node-logger' ).mocks.MockLogger,
-    PriorityJobQueue = require('../lib/PriorityJobQueue');
+    PriorityJobQueue = require('../lib/PriorityJobQueue' ),
+    JobModel = require('../lib/JobModel' ),
+    Dataset = require('./fixtures/JobQueueDataset');
 
 describe('ServiceFactory', function() {
     'use strict';
 
-    var createOptions = function() {
+    var dataset = new Dataset(),
+        createOptions;
+
+    createOptions = function() {
         var opts = {};
 
         opts.log = MockLogger.createLogger('PriorityJobQueue');
@@ -49,20 +54,56 @@ describe('ServiceFactory', function() {
                 queue[ method ].should.be.a( 'function' );
             });
         });
+
+        it('should create a new instance with a pre-defined list of jobs', function() {
+            var options = createOptions(),
+                jq;
+
+            options.jobs = dataset.createJobList( 10 );
+
+            jq = new PriorityJobQueue( options );
+
+            jq.getJobList().length.should.equal( 10 );
+        });
     });
 
     describe('createJob', function() {
         var queue = new PriorityJobQueue( createOptions() );
 
-        it('should create a new job model with id and date created', function() {
+        it('should create a new job model without params and create id, date created, status', function() {
             var job = queue.createJob();
 
             should.exist( job );
-
             should.exist( job.id );
             should.exist( job.dateCreated );
 
-            job.status.should.equal( 'new' );
+            job.priority.should.equal( JobModel.MEDIUM_PRIORITY );
+            job.status.should.equal( JobModel.NEW_STATUS );
+        });
+
+        it('should create a new job model with parameters', function() {
+            var job,
+                params = {
+                    description:'my test job',
+                    fn: function(args) { console.log( args );},
+                    args:[ 1, 'b', 3 ],
+                    callback: function(err, res) { },
+                    priority: JobModel.HIGH_PRIORITY
+                };
+
+            job = queue.createJob( params );
+
+            should.exist( job );
+            should.exist( job.id );
+            should.exist( job.dateCreated );
+
+            job.status.should.equal( JobModel.NEW_STATUS );
+
+            job.description.should.equal( params.description );
+            job.fn.should.equal( params.fn );
+            job.args.should.equal( params.args );
+            job.callback.should.equal( params.callback );
+            job.priority.should.equal( params.priority );
         });
     });
 });
