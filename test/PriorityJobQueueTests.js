@@ -56,6 +56,13 @@ describe('ServiceFactory', function() {
 
         it('should create a new job model with id and date created', function() {
             var job = queue.createJob();
+
+            should.exist( job );
+
+            should.exist( job.id );
+            should.exist( job.dateCreated );
+
+            job.status.should.equal( 'new' );
         });
     });
 });
