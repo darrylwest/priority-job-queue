@@ -75,35 +75,6 @@ describe('ServiceFactory', function() {
 
             should.exist( job );
             should.exist( job.id );
-            should.exist( job.dateCreated );
-
-            job.getPriority().should.equal( JobModel.MEDIUM_PRIORITY );
-            job.getStatus().should.equal( JobModel.NEW_STATUS );
-        });
-
-        it('should create a new job model with parameters', function() {
-            var job,
-                params = {
-                    description:'my test job',
-                    fn: function(args) { console.log( args );},
-                    args:[ 1, 'b', 3 ],
-                    callback: function(err, res) { },
-                    priority: JobModel.HIGH_PRIORITY
-                };
-
-            job = queue.createJob( params );
-
-            should.exist( job );
-            should.exist( job.id );
-            should.exist( job.dateCreated );
-
-            job.getStatus().should.equal( JobModel.NEW_STATUS );
-
-            job.description.should.equal( params.description );
-            job.fn.should.equal( params.fn );
-            job.args.should.equal( params.args );
-            job.callback.should.equal( params.callback );
-            job.getPriority().should.equal( params.priority );
         });
     });
 });
