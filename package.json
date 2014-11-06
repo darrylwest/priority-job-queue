@@ -1,0 +1,39 @@
+{
+  "name": "priority-job-queue",
+  "version": "00.90.10",
+  "description": "A client-side priority job queue",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/darrylwest/priority-job-queue.git"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "keywords": [
+    "priority queue",
+    "job",
+    "queue"
+  ],
+  "dependencies": {
+    "lodash": "~2.4.1",
+    "moment": "^2.8.1",
+    "node-uuid": "~1.4.1",
+    "simple-node-logger": "^0.92.10"
+  },
+  "devDependencies": {
+    "casual": "~1.4.5",
+    "chai": "~1.9.1",
+    "gulp": "^3.8.8",
+    "gulp-jshint": "^1.8.4",
+    "gulp-mocha": "^1.1.0",
+    "gulp-plumber": "^0.6.6",
+    "gulp-util": "^3.0.1",
+    "jshint-stylish": "^0.4.0",
+    "mocha": "~1.18.2"
+  },
+  "author": "darryl.west@raincitysoftware.com",
+  "license": "Apache 2.0",
+  "homepage": "https://github.com/darrylwest/priority-job-queue"
+}
+
