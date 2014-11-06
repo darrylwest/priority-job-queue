@@ -77,8 +77,8 @@ describe('ServiceFactory', function() {
             should.exist( job.id );
             should.exist( job.dateCreated );
 
-            job.priority.should.equal( JobModel.MEDIUM_PRIORITY );
-            job.status.should.equal( JobModel.NEW_STATUS );
+            job.getPriority().should.equal( JobModel.MEDIUM_PRIORITY );
+            job.getStatus().should.equal( JobModel.NEW_STATUS );
         });
 
         it('should create a new job model with parameters', function() {
@@ -97,13 +97,13 @@ describe('ServiceFactory', function() {
             should.exist( job.id );
             should.exist( job.dateCreated );
 
-            job.status.should.equal( JobModel.NEW_STATUS );
+            job.getStatus().should.equal( JobModel.NEW_STATUS );
 
             job.description.should.equal( params.description );
             job.fn.should.equal( params.fn );
             job.args.should.equal( params.args );
             job.callback.should.equal( params.callback );
-            job.priority.should.equal( params.priority );
+            job.getPriority().should.equal( params.priority );
         });
     });
 });
