@@ -17,46 +17,81 @@ queue.on( PriorityJobQueue.JOB_ADDED_EVENT, function(obj) {
     log.info('job added event: ', obj);
 });
 
-var runner = function(params, callback) {
+// standard runner with opts and callback; params has a timeout value
+var runner = function(opts, callback) {
     setTimeout(function() {
         callback( null, 'ok' );
-    }, params.timeout );
+    }, opts.timeout );
+};
+
+var createStopJob = function() {
+    var job = queue.createJob({
+        description:'stop the queue',
+        priority:99
+    });
+
+    job.fn = function(opts, callback) {
+        dash.defer(function() {
+            log.info("StopJob: stop the read time ticker to kill the queue...");
+            queue.stopRealTimeTicker();
+
+            if (callback) {
+                callback(null, 'ok');
+            }
+        });
+    };
+
+    return job;
 };
 
 while (loops > 0) {
     loops--;
 
-    var job = queue.createJob();
+    var createJob = function() {
+        var job = queue.createJob();
 
-    job.setPriority( Math.round( Math.random() * 90 ) + 10 );
+        job.setPriority( Math.round( Math.random() * 90 ) + 10 );
 
-    job.description = 'job # ' + loops + ', priority: ' + job.getPriority();
+        job.description = 'job # ' + loops + ', priority: ' + job.getPriority();
 
-    job.fn = runner;
-    job.args = { timeout:Math.round( Math.random() * 1000 ) };
-    job.callback = function() {
-        log.info('job complete callback: ', job.description);
+        job.fn = runner;
+        job.opts = { timeout:Math.round( Math.random() * 1000 ) };
+        job.callback = function() {
+            log.info('job complete callback: ', job.description);
+        };
+
+        job.on( JobModel.STATUS_CHANGE_EVENT, function(status) {
+            log.info('status change: ', status);
+            if (status === JobModel.COMPLETE) {
+                log.info('job complete event: ', job.id, ' : ', job.description);
+            }
+        });
+
+        job.on( JobModel.PROGRESS_EVENT, function(percentage) {
+            log.info('progress : ', percentage, ' : ', job.id );
+        });
+
+        return job;
     };
 
-    job.on( JobModel.STATUS_CHANGE_EVENT, function(status) {
-        log.info('status change: ', status);
-        if (status === JobModel.COMPLETE) {
-            log.info('job complete event: ', job.id, ' : ', job.description);
-        }
-    });
-
-    job.on( JobModel.PROGRESS_EVENT, function(percentage) {
-        log.info('progress : ', percentage, ' : ', job.id );
-    });
-
-    // the real-time ticker means that adding it to the queue will auto-start the job
-    queue.add( job );
+    // this will fire a job added event
+    queue.add( createJob() );
 }
 
-log.info('total jobs: ', queue.getJobList().length);
+var list = queue.getJobList();
+log.info('total jobs: ', list.length);
+list.forEach(function(job) {
+    log.info('job: ', job.id, ' p: ', job.getPriority(), ' s: ', job.getStatus());
+});
 
 setTimeout(function() {
+    var job = queue.findNextJob();
+    log.info('first job: ', job.id, ' p: ', job.getPriority());
+
+    queue.add( createStopJob() );
+
     log.info('start the ticker...');
     queue.startRealTimeTicker();
-}, 2000);
+
+}, 1000);
 

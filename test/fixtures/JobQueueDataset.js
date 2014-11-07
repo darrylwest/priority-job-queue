@@ -43,8 +43,8 @@ var JobQueueDataset = function() {
         }
 
         if (!params.fn) {
-            params.fn = function(args, callback) {
-                // console.log( args );
+            params.fn = function(opts, callback) {
+                // console.log( opts );
 
                 if (callback) {
                     dash.defer(function() {

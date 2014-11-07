@@ -71,6 +71,30 @@ describe('ServiceFactory', function() {
         });
     });
 
+    describe('add', function() {
+        var queue = new PriorityJobQueue( createOptions() );
+
+        it('should add job to list and change status to queue and fire event', function(done) {
+            var job = dataset.createJob();
+
+            job.getStatus().should.equal( JobModel.NEW_STATUS );
+
+            queue.on( PriorityJobQueue.JOB_ADDED_EVENT, function(ref) {
+                ref.getStatus().should.equal( JobModel.QUEUED );
+                ref.id.should.equal( job.id );
+
+                done();
+            });
+
+            queue.add( job );
+
+        });
+    });
+
+    describe('remove', function() {
+        it('should remove a known job and fire and event');
+    });
+
     describe('tickHandler', function() {
         var opts = createOptions();
 

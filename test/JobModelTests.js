@@ -56,7 +56,7 @@ describe('JobModel', function() {
                 params = {
                     description:'my test job',
                     fn: function(args) { console.log( args );},
-                    args:[ 1, 'b', 3 ],
+                    opts:[ 1, 'b', 3 ],
                     callback: function(err, res) { },
                     priority: JobModel.HIGH_PRIORITY
                 };
@@ -71,7 +71,7 @@ describe('JobModel', function() {
 
             job.description.should.equal( params.description );
             job.fn.should.equal( params.fn );
-            job.args.should.equal( params.args );
+            job.opts.should.equal( params.opts );
             job.callback.should.equal( params.callback );
             job.getPriority().should.equal( params.priority );
         });
