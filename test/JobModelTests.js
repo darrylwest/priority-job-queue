@@ -111,7 +111,8 @@ describe('JobModel', function() {
         });
 
         it('should run a scheduled job and re-schedule', function(done) {
-            var job = new JobModel();
+            var job = new JobModel(),
+                progress = 0;
 
             job.scheduledIdleTime = 10;
 
@@ -123,15 +124,20 @@ describe('JobModel', function() {
             };
 
             job.fn = function(args, callback) {
-
                 dash.defer( callback );
             };
+
+            job.on( JobModel.PROGRESS_EVENT, function(percent) {
+                percent.should.equal( 100 );
+                progress = percent;
+            });
 
             job.on( JobModel.STATUS_CHANGE_EVENT, function(status) {
                 if (status === JobModel.IDLE) {
                     should.exist( job.startTime );
                     should.exist( job.completedTime );
                     should.exist( job.scheduledTime );
+                    progress.should.equal( 100 );
                 } else if (status === JobModel.RUNNING) {
                     should.exist( job.startTime );
                 } else {
