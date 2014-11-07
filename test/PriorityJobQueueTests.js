@@ -92,7 +92,27 @@ describe('ServiceFactory', function() {
     });
 
     describe('remove', function() {
-        it('should remove a known job and fire and event');
+        var opts = createOptions();
+
+        opts.jobs = dataset.createJobList( 5 );
+
+        it('should remove a known job and fire and event', function(done) {
+            var queue = new PriorityJobQueue( opts ),
+                job = queue.findNextJob();
+
+            queue.on( PriorityJobQueue.JOB_REMOVED_EVENT, function(obj) {
+                should.exist( obj );
+
+                obj.id.should.equal( job.id );
+
+                queue.getJobList().length.should.equal( 4 );
+
+                done();
+            });
+
+            queue.getJobList().length.should.equal( 5 );
+            queue.remove( job );
+        });
     });
 
     describe('tickHandler', function() {
