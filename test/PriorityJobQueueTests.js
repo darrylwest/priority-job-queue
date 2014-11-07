@@ -34,6 +34,8 @@ describe('ServiceFactory', function() {
                 'createJob',
                 'findNextJob',
                 'tickHandler',
+                'startRealTimeTicker',
+                'stopRealTimeTicker',
                 // inherited
                 'addListener',
                 'emit',

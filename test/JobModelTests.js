@@ -77,6 +77,77 @@ describe('JobModel', function() {
         });
     });
 
+    describe('run', function() {
+        it('should run a simple job and set status codes, start/stop times', function(done) {
+            var job = new JobModel();
+
+            job.callback = function(err, results) {
+                should.exist( job.startTime );
+                should.exist( job.completedTime );
+
+                done();
+            };
+
+            job.fn = function(args, callback) {
+
+                dash.defer( callback );
+            };
+
+            job.on( JobModel.STATUS_CHANGE_EVENT, function(status) {
+                if (status === JobModel.COMPLETE) {
+                    should.exist( job.startTime );
+                    should.exist( job.completedTime );
+                } else if (status === JobModel.RUNNING) {
+                    should.exist( job.startTime );
+                } else {
+                    throw new Error( 'status is not valid: ', status);
+                }
+            });
+
+            should.not.exist( job.startTime );
+            should.not.exist( job.completedTime );
+
+            job.run();
+        });
+
+        it('should run a scheduled job and re-schedule', function(done) {
+            var job = new JobModel();
+
+            job.scheduledIdleTime = 10;
+
+            job.callback = function(err, results) {
+                should.exist( job.startTime );
+                should.exist( job.completedTime );
+
+                done();
+            };
+
+            job.fn = function(args, callback) {
+
+                dash.defer( callback );
+            };
+
+            job.on( JobModel.STATUS_CHANGE_EVENT, function(status) {
+                if (status === JobModel.IDLE) {
+                    should.exist( job.startTime );
+                    should.exist( job.completedTime );
+                    should.exist( job.scheduledTime );
+                } else if (status === JobModel.RUNNING) {
+                    should.exist( job.startTime );
+                } else {
+                    throw new Error( 'status is not valid: ', status);
+                }
+            });
+
+            should.not.exist( job.startTime );
+            should.not.exist( job.completedTime );
+            should.not.exist( job.scheduledTime );
+            should.exist( job.scheduledIdleTime );
+
+            job.run();
+        });
+    });
+
     describe('setStatus', function() {
         it('should change status and fire an event on change', function(done) {
             var job = new JobModel();

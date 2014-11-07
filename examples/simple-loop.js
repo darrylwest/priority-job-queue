@@ -14,6 +14,8 @@ queue.on( PriorityJobQueue.JOB_ADDED_EVENT, function(obj) {
     log.info('job added event: ', obj);
 });
 
+queue.startRealTimeTicker();
+
 var looper = function(params, callback) {
     log.info('params: ', params);
 
@@ -38,10 +40,10 @@ job.fn = looper;
 job.args = { one:1, two:2 };
 job.callback = function() {
     log.info('job complete callback...');
+    queue.stopRealTimeTicker();
 };
 
 queue.add( job );
 
 // signal a timer tick...
-queue.tickHandler();
 

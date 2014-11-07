@@ -35,7 +35,8 @@ _Although this module could be used server side, it was designed for client proj
 
 ## Examples
 
-* simple
+* simple-loop.js : shows how to construct a single job, add it to the queue and start the queue.
+* 
 
 ## Tests
 
