@@ -21,6 +21,7 @@ describe('JobModel', function() {
                 'setPriority',
                 'getStatus',
                 'setStatus',
+                'run',
                 // inherited
                 'addListener',
                 'emit',
