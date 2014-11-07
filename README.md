@@ -35,6 +35,8 @@ _Although this module could be used server side, it was designed for client proj
 
 ## Examples
 
+* simple
+
 ## Tests
 
 ## Mocks

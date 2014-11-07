@@ -41,8 +41,7 @@ job.callback = function() {
 };
 
 queue.add( job );
-// queue.start();
 
-job.run();
-
+// signal a timer tick...
+queue.tickHandler();
 

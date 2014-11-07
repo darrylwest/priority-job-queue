@@ -32,6 +32,8 @@ describe('ServiceFactory', function() {
                 'add',
                 'remove',
                 'createJob',
+                'findNextJob',
+                'tickHandler',
                 // inherited
                 'addListener',
                 'emit',
