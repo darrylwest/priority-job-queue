@@ -23,15 +23,74 @@ _Although this module could be used server side, it was designed for client proj
 
 ## Use
 
+It is probably best to look at the examples below to see how the queue can be used.  The basics are 1) create a job, 2) add to the queue, 3) let the queue run it.  If you add a job with a low or normal priority, then other jobs with a higher priority or older jobs with the same priority will run first.
+
+The job runner is based on a real-time tick that evaluates queued jobs to select the highest priority then run it.  The next tick repeats this process by first checking to see that there are no running jobs.  
+
+Since the entire queue is evaluated at each tick, a job's priority may change up or down while in the queue to move it up or down in the list.
+
+When a job completes it's status is set to 'complete'.  Or, if the job is re-occurring it will run, then set the scheduledTime to now() + the scheduledIdleTime.  When it completes, it's status is set to idle so that it won't be removed from the list.
+
 ## API
 
-### JobQueue
+### PriorityJobQueue
+
+The priority job queue object selects the highest priority job from the list and runs it.  It also searches for schedule jobs and runs them.  A typical use would look like this:
+
+```
+	var PriorityJobQueue = require('priority-job-queue').PriorityJobQueue,
+		JobModel = require('priority-job-queue').models.JobModel,
+		log = require('simple-node-logger').createSimpleLogger(),
+		queue = new PriorityJobQueue( { log:log } );
+		
+	var job = queue.createJob({ description:'my test job' });
+	
+	// now implement the job...
+	job.fn = function(opts, callback) {
+		log.info('doing some work...');
+		callback( null, 'done working...');
+	};
+	
+	queue.add( job );
+	
+	// start the internal ticker
+	queue.startRealTimeTicker();
+	
+```
+
 #### Methods
+
+* getJobList() - returns a copy of the job list
+* add( obj ) - adds a job or list of jobs, sets the job's status to queued; fires an event
+* remove( job ) - removes a job and fires an event
+* tickHandler - searches for running jobs; if none are found it locates the next and runs it
+* createJob - creates a JobModel object with defaults
+* startRealTimeTicker - starts the real time event chain
+* stopRealTimeTicker - kills the ticker
+
 #### Events
 
+* JOB\_ADDED_EVENT - fired when a new job or a list of jobs are added to the queue
+* JOB\_REMOVED_EVENT - fired when a job is removed from the queue
+* ONE\_SECOND_TICK - fired each second when the real time ticker is running
+
 ### JobModel
+
+The JobModel is a data model with run logic for the contained job.  The model contains status, priority, description, and pointers to the work-method, options and callback.  When a job starts, the startTime is set; when it completes, completedTime is set.  If the scheduledIdleTime is set, the job will run continually with idle time between runs, e.g., for memory cleanups, or any recurring job.
+
 #### Methods
+
+* setPriority(p) - set the priority to p (99..10) and fire an event
+* getPriority() - return the current priority
+* setStatus(s) - set status to s and fire an event
+* getStatus() - return the current status
+* run() - run the job; this is called by the queue.
+
 #### Events
+
+* STATUS\_CHANGE_EVENT - fired when a status changes
+* PRIORITY\_CHANGE_EVENT - fired when a priority is changed
+* PROGRESS\_EVENT - fired with a percent complete (by default only when the progress is 100%)
 
 ## Examples
 
@@ -40,7 +99,25 @@ _Although this module could be used server side, it was designed for client proj
 
 ## Tests
 
+```
+	gulp test
+	
+	// or
+	
+	make test
+	
+	// or
+	
+	npm test
+	
+	// or 
+	
+	make watch
+```
+
 ## Mocks
+
+Currently no mocks but the test/fixtures folder has a JobQueueDataset to create lists of jobs for testing. 
 
 - - -
 <p><small><em>copyright © 2014 rain city software | version 0.90.10</em></small></p>
