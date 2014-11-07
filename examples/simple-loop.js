@@ -4,7 +4,7 @@
 // 2014.11.06
 'use strict';
 
-var PriorityJobQueue = require('../index'),
+var PriorityJobQueue = require('../index').PriorityJobQueue,
     JobModel = require('../index').models.JobModel,
     log = require('simple-node-logger').createSimpleLogger(),
     queue = new PriorityJobQueue( { log:log } );

@@ -20,6 +20,8 @@ var JobQueueDataset = function() {
 
         while (count > 0) {
             var params = {
+                status: JobModel.QUEUED,
+                priority:Math.round( Math.random() * 60 ) + JobModel.MEDIUM_PRIORITY,
                 description:'job # ' + count
             };
 
@@ -34,13 +36,19 @@ var JobQueueDataset = function() {
     this.createJob = function(params) {
         if (!params) params = {};
 
+        if (!params.callback) {
+            params.callback = function(err, results) {
+
+            };
+        }
+
         if (!params.fn) {
             params.fn = function(args, callback) {
-                console.log( args );
+                // console.log( args );
 
                 if (callback) {
                     dash.defer(function() {
-                        callback();
+                        callback(null, 'done');
                     });
                 }
             };

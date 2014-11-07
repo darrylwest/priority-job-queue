@@ -71,6 +71,49 @@ describe('ServiceFactory', function() {
         });
     });
 
+    describe('tickHandler', function() {
+        var opts = createOptions();
+
+        opts.jobs = dataset.createJobList( 5 );
+
+        it('should start the highest priority job in the list', function(done) {
+            var queue = new PriorityJobQueue( opts ),
+                job = queue.findNextJob();
+
+            job.on( JobModel.PROGRESS_EVENT, function(percent) {
+                if (percent === 100) {
+                    done();
+                }
+            });
+
+            queue.tickHandler();
+        });
+
+    });
+
+    describe('findNextJob', function() {
+        var opts = createOptions(),
+            ref;
+
+        opts.jobs = dataset.createJobList( 25 );
+        ref = opts.jobs[ 10 ];
+        ref.setPriority( JobModel.CRITICAL );
+
+        it('should select the highest priority oldest job', function() {
+            var queue = new PriorityJobQueue( opts ),
+                job,
+                list = queue.getJobList();
+
+            list.length.should.equal( 25 );
+
+            job = queue.findNextJob();
+
+            should.exist( job );
+            job.id.should.equal( ref.id );
+            job.getStatus().should.equal( JobModel.QUEUED );
+        });
+    });
+
     describe('createJob', function() {
         var queue = new PriorityJobQueue( createOptions() );
 

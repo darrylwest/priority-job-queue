@@ -13,7 +13,7 @@ var gulp = require('gulp'),
 
 var paths = {
     src: 'lib/*.js',
-    tests: 'test/*.js'
+    tests:'test/*.js'
 };
 
 var errorHandler = function(err) {
