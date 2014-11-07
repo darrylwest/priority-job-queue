@@ -96,6 +96,7 @@ The JobModel is a data model with run logic for the contained job.  The model co
 
 * simple-loop.js : shows how to construct a single job, add it to the queue and start the queue.
 * multi-jobs.js : shows how jobs are sorted and run by priority
+* recurring-jobs.js : shows how to schedule jobs that run continuously
 
 ## Tests
 
@@ -120,4 +121,4 @@ The JobModel is a data model with run logic for the contained job.  The model co
 Currently no mocks but the test/fixtures folder has a JobQueueDataset to create lists of jobs for testing. 
 
 - - -
-<p><small><em>copyright © 2014 rain city software | version 0.90.11</em></small></p>
+<p><small><em>copyright © 2014 rain city software | version 0.90.12</em></small></p>
