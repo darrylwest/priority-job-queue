@@ -38,10 +38,6 @@ var delayed = function(opts, callback) {
 
     log.info('delayed invocation run at: ', Date.now());
 
-    dash.defer(function() {
-        queue.remove( job );
-    });
-
     callback(null, opts);
 };
 
@@ -49,6 +45,14 @@ queue.startRealTimeTicker();
 
 job = queue.createJob();
 job.fn = delayed;
+job.callback = function(err, results) {
+    log.info('use the optional callback to remove from the queue');
+    dash.defer(function() {
+        queue.remove( job );
+    });
+};
+
+log.info('set the scheduled run time to 3.5 seconds in the future...');
 job.scheduledTime = new Date( Date.now() + 3500 );
 
 // set to idle prior to adding to the list

@@ -8,9 +8,9 @@ A client-side priority job queue.
 
 ## Overview
 
-Priority Job Queue iterates over a list of jobs to select the highest priority job to run.  When a job is selected, it's 'fn' method is called with args and callback.  The JobModel's status changes from 'queued' to 'running' and a status change event is fired.
+Priority Job Queue iterates over a list of jobs to select the highest priority job to run.  When a job is selected, it's 'fn' method is called with optional args and callback.  The JobModel's status changes from 'queued' to 'running' and a status change event is fired.
 
-When the job completes, the JobModel's status is changed to 'complete' and a status change is again fired.  The queue also fires a 'queue change' event and removes the old job, then searches for the next one to run.
+When the job completes, the JobModel's status is changed to 'complete' and a status change is again fired.  The queue also fires a 'queue change' event when a job is removed from the queue.
 
 Typically jobs run serially but it's possible to run jobs in parallel by adding more than a single job to the JobModel.  This way, a set of jobs would run to completion before the next job or job set was run.
 
@@ -24,7 +24,15 @@ _Although this module could be used server side, it was designed for client proj
 
 ## Use
 
-It is probably best to look at the examples below to see how the queue can be used.  The basics are 1) create a job, 2) add to the queue, 3) let the queue run it.  If you add a job with a low or normal priority, then other jobs with a higher priority or older jobs with the same priority will run first.
+The best way to see how the queue/job model work is to look at the examples below.  The basics are 
+
+1. create the queue and start clock `queue.startRealTimeTicker()`.
+2. create a job with `new JobModel()` or `queue.createJob()`
+3. assign a runnable function `job.fn = function(opts, callback) {};`
+4. add to the queue `queue.add( job )`
+5. let the queue run it.
+
+If you add a job with a low or normal priority, then other jobs with a higher priority or older jobs with the same priority will run first.
 
 The job runner is based on a real-time tick that evaluates queued jobs to select the highest priority then run it.  The next tick repeats this process by first checking to see that there are no running jobs.  
 
@@ -48,8 +56,13 @@ The priority job queue object selects the highest priority job from the list and
 	
 	// now implement the job...
 	job.fn = function(opts, callback) {
+		var err, results;
+		
 		log.info('doing some work...');
-		callback( null, 'done working...');
+		
+		// the callback must be invoked to signal the 
+		// queue that the job has run
+		callback( err, results );
 	};
 	
 	queue.add( job );
