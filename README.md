@@ -2,6 +2,7 @@
 - - -
 A client-side priority job queue.
 
+[![NPM version](https://badge.fury.io/js/priority-job-queue.svg)](http://badge.fury.io/js/priority-job-queue)
 [![Build Status](https://travis-ci.org/darrylwest/priority-job-queue.svg?branch=master)](https://travis-ci.org/darrylwest/priority-job-queue)
 [![Dependency Status](https://david-dm.org/darrylwest/priority-job-queue.svg)](https://david-dm.org/darrylwest/priority-job-queue)
 
@@ -80,9 +81,9 @@ The JobModel is a data model with run logic for the contained job.  The model co
 
 #### Methods
 
-* setPriority(p) - set the priority to p (99..10) and fire an event
+* setPriority(prioity) - set the priority to p (99..10) and fire an event
 * getPriority() - return the current priority
-* setStatus(s) - set status to s and fire an event
+* setStatus(status) - set status to s and fire an event
 * getStatus() - return the current status
 * run() - run the job; this is called by the queue.
 
@@ -97,6 +98,7 @@ The JobModel is a data model with run logic for the contained job.  The model co
 * simple-loop.js : shows how to construct a single job, add it to the queue and start the queue.
 * multi-jobs.js : shows how jobs are sorted and run by priority
 * recurring-jobs.js : shows how to schedule jobs that run continuously
+* delayed-start.js : shows how to add a job scheduled to run at some time in the future
 
 ## Tests
 
@@ -121,4 +123,4 @@ The JobModel is a data model with run logic for the contained job.  The model co
 Currently no mocks but the test/fixtures folder has a JobQueueDataset to create lists of jobs for testing. 
 
 - - -
-<p><small><em>copyright © 2014 rain city software | version 0.90.17</em></small></p>
+<p><small><em>copyright © 2014 rain city software | version 0.90.18</em></small></p>
