@@ -107,10 +107,25 @@ The JobModel is a data model with run logic for the contained job.  The model co
 
 ## Examples
 
+PriorityJobQueue examples can be foound in the examples folder.  The two types are command line scripts and in-browser compiled with browserify.
+
+### Command Line Examples
+
 * simple-loop.js : shows how to construct a single job, add it to the queue and start the queue.
 * multi-jobs.js : shows how jobs are sorted and run by priority
 * recurring-jobs.js : shows how to schedule jobs that run continuously
 * delayed-start.js : shows how to add a job scheduled to run at some time in the future
+
+### Browser Example
+
+The browser example is 'index.html' in the examples folder.  You can run it by pointing your browser to the file or, if you have http-server you can do this:
+
+```
+	cd examples
+	http-server -p 3000 -o
+```
+
+The example will run on port 3000.  If you have browserify installed you may modify the browser example in examples/main.js then run `make bundle` to compile the changes.
 
 ## Tests
 
