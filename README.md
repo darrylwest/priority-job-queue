@@ -121,4 +121,4 @@ The JobModel is a data model with run logic for the contained job.  The model co
 Currently no mocks but the test/fixtures folder has a JobQueueDataset to create lists of jobs for testing. 
 
 - - -
-<p><small><em>copyright © 2014 rain city software | version 0.90.15</em></small></p>
+<p><small><em>copyright © 2014 rain city software | version 0.90.16</em></small></p>
