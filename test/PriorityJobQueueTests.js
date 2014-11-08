@@ -72,10 +72,11 @@ describe('ServiceFactory', function() {
     });
 
     describe('add', function() {
-        var queue = new PriorityJobQueue( createOptions() );
+
 
         it('should add job to list and change status to queue and fire event', function(done) {
-            var job = dataset.createJob();
+            var queue = new PriorityJobQueue( createOptions() ),
+                job = dataset.createJob();
 
             job.getStatus().should.equal( JobModel.NEW_STATUS );
 
@@ -88,6 +89,17 @@ describe('ServiceFactory', function() {
 
             queue.add( job );
 
+        });
+
+        it('should not change status if idle', function() {
+            var queue = new PriorityJobQueue( createOptions() ),
+                job = dataset.createJob();
+
+            job.setStatus( JobModel.IDLE );
+            job.getStatus().should.equal( JobModel.IDLE );
+
+            queue.add( job );
+            job.getStatus().should.equal( JobModel.IDLE );
         });
     });
 
