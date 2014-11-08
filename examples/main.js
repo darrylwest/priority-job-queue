@@ -30,6 +30,10 @@ var createClock = function() {
     return job;
 };
 
+// TODO : create cleanup job to remove completed jobs
+// create prime number job to calculate in blocks of 1000
+// use one second ticker to create a new random job each 5 seconds
+
 jobs = [ createClock ];
 
 if (window) {
