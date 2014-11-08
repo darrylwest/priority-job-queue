@@ -17,11 +17,11 @@ queue.on( PriorityJobQueue.JOB_ADDED_EVENT, function(obj) {
 
 queue.startRealTimeTicker();
 
-var looper = function(params, callback) {
-    log.info('params: ', params);
+var looper = function(opts, callback) {
+    log.info('options: ', opts);
 
     var loop = 0,
-        maxLoops = params.maxLoops;
+        maxLoops = opts.maxLoops;
 
     var id = setInterval(function() {
         loop++;
@@ -40,7 +40,7 @@ var job = queue.createJob();
 
 job.description = 'my simple looper job';
 job.fn = looper;
-job.args = { maxLoops:5 };
+job.opts = { maxLoops:5 };
 job.callback = function() {
     log.info('job complete callback...');
     queue.stopRealTimeTicker();

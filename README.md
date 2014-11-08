@@ -94,7 +94,7 @@ The JobModel is a data model with run logic for the contained job.  The model co
 
 #### Methods
 
-* setPriority(prioity) - set the priority to p (99..10) and fire an event
+* setPriority(priority) - set the priority to p (99..10) and fire an event
 * getPriority() - return the current priority
 * setStatus(status) - set status to s and fire an event
 * getStatus() - return the current status
@@ -136,4 +136,4 @@ The JobModel is a data model with run logic for the contained job.  The model co
 Currently no mocks but the test/fixtures folder has a JobQueueDataset to create lists of jobs for testing. 
 
 - - -
-<p><small><em>copyright © 2014 rain city software | version 0.90.18</em></small></p>
+<p><small><em>copyright © 2014 rain city software | version 0.90.19</em></small></p>
