@@ -49,8 +49,7 @@ The priority job queue object selects the highest priority job from the list and
 ```
 	var PriorityJobQueue = require('priority-job-queue').PriorityJobQueue,
 		JobModel = require('priority-job-queue').models.JobModel,
-		log = require('simple-node-logger').createSimpleLogger(),
-		queue = new PriorityJobQueue( { log:log } );
+		queue = PriorityJobQueue.createInstance();
 		
 	var job = queue.createJob({ description:'my test job' });
 	
@@ -136,4 +135,4 @@ The JobModel is a data model with run logic for the contained job.  The model co
 Currently no mocks but the test/fixtures folder has a JobQueueDataset to create lists of jobs for testing. 
 
 - - -
-<p><small><em>copyright © 2014 rain city software | version 0.90.19</em></small></p>
+<p><small><em>copyright © 2014 rain city software | version 0.90.20</em></small></p>

@@ -69,6 +69,13 @@ describe('ServiceFactory', function() {
 
             jq.getJobList().length.should.equal( 10 );
         });
+
+        it('should create an instance from createInstance static method', function() {
+            var instance = PriorityJobQueue.createInstance();
+
+            should.exist( instance );
+            instance.should.be.instanceof( PriorityJobQueue );
+        });
     });
 
     describe('add', function() {
