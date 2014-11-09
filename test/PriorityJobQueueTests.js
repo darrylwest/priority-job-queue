@@ -79,8 +79,6 @@ describe('ServiceFactory', function() {
     });
 
     describe('add', function() {
-
-
         it('should add job to list and change status to queue and fire event', function(done) {
             var queue = new PriorityJobQueue( createOptions() ),
                 job = dataset.createJob();

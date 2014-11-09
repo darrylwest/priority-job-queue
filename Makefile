@@ -16,7 +16,7 @@ docs:
 	@( gulp jsdoc )
 
 bundle:
-	browserify examples/main.js --debug -o examples/bundle.js
+	browserify examples/main.js -o examples/bundle.js
 
 .PHONY:	npm
 .PHONY:	watch
