@@ -116,6 +116,8 @@ PriorityJobQueue examples can be foound in the examples folder.  The two types a
 * recurring-jobs.js : shows how to schedule jobs that run continuously
 * delayed-start.js : shows how to add a job scheduled to run at some time in the future
 
+_[More Examples...](https://github.com/darrylwest/priority-job-queue/tree/master/examples)_
+
 ### Browser Example
 
 The browser example is 'index.html' in the examples folder.  You can run it by pointing your browser to the file or, if you have http-server you can do this:
@@ -150,4 +152,4 @@ The example will run on port 3000.  If you have browserify installed you may mod
 Currently no mocks but the test/fixtures folder has a JobQueueDataset to create lists of jobs for testing. 
 
 - - -
-<p><small><em>copyright © 2014 rain city software | version 0.90.24</em></small></p>
+<p><small><em>copyright © 2014 rain city software | version 0.90.25</em></small></p>

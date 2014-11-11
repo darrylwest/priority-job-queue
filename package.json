@@ -1,6 +1,6 @@
 {
   "name": "priority-job-queue",
-  "version": "00.90.24",
+  "version": "00.90.25",
   "description": "A client-side priority job queue",
   "main": "index.js",
   "repository": {
