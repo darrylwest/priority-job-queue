@@ -6,6 +6,7 @@
 
 var PriorityJobQueue = require('../index').PriorityJobQueue,
     JobModel = require('../index').models.JobModel,
+    JobModelEvent = require('../index').events.JobModelEvent,
     dash = require('lodash'),
     log = require('simple-node-logger').createSimpleLogger(),
     queue = new PriorityJobQueue( { log:log } );
@@ -35,7 +36,7 @@ var job = queue.createJob();
 job.fn = clean;
 job.opts = { count:4 };
 job.scheduledIdleTime = 1000;
-job.on( JobModel.STATUS_CHANGE_EVENT, function(status) {
+job.on( JobModelEvent.STATUS_CHANGE_EVENT, function(status) {
     log.info( 'status change: ', status, ', scheduled time: ', job.scheduledTime );
 });
 
