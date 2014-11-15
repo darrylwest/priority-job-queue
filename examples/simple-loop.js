@@ -6,6 +6,7 @@
 
 var PriorityJobQueue = require('../index').PriorityJobQueue,
     JobModel = require('../index').models.JobModel,
+    JobModelEvent = require('../index').events.JobModelEvent,
     log = require('simple-node-logger').createSimpleLogger(),
     queue = new PriorityJobQueue( { log:log } );
 
@@ -46,11 +47,11 @@ job.callback = function() {
     queue.stopRealTimeTicker();
 };
 
-job.on( JobModel.STATUS_CHANGE_EVENT, function(status) {
+job.on( JobModelEvent.STATUS_CHANGE_EVENT, function(status) {
     log.info('status change: ', status);
 });
 
-job.on( JobModel.PROGRESS_EVENT, function(percentage) {
+job.on( JobModelEvent.PROGRESS_EVENT, function(percentage) {
     log.info('progress : ', percentage);
 });
 

@@ -9,6 +9,7 @@ var should = require('chai').should(),
     MockLogger = require('simple-node-logger' ).mocks.MockLogger,
     PriorityJobQueue = require('../lib/PriorityJobQueue' ),
     JobModel = require('../lib/JobModel' ),
+    JobModelEvent = require('../lib/JobModelEvent' ),
     Dataset = require('./fixtures/JobQueueDataset');
 
 describe('ServiceFactory', function() {
@@ -141,7 +142,7 @@ describe('ServiceFactory', function() {
             var queue = new PriorityJobQueue( opts ),
                 job = queue.findNextJob();
 
-            job.on( JobModel.PROGRESS_EVENT, function(percent) {
+            job.on( JobModelEvent.PROGRESS_EVENT, function(percent) {
                 if (percent === 100) {
                     done();
                 }

@@ -7,7 +7,8 @@
 var should = require('chai').should(),
     dash = require('lodash' ),
     JobModel = require('../lib/JobModel' ),
-    Dataset = require('./fixtures/JobQueueDataset');
+    Dataset = require('./fixtures/JobQueueDataset' ),
+    JobModelEvent = require('../lib/JobModelEvent');
 
 describe('JobModel', function() {
     'use strict';
@@ -93,7 +94,7 @@ describe('JobModel', function() {
                 dash.defer( callback );
             };
 
-            job.on( JobModel.STATUS_CHANGE_EVENT, function(status) {
+            job.on( JobModelEvent.STATUS_CHANGE_EVENT, function(status) {
                 if (status === JobModel.COMPLETE) {
                     should.exist( job.startTime );
                     should.exist( job.completedTime );
@@ -127,12 +128,12 @@ describe('JobModel', function() {
                 dash.defer( callback );
             };
 
-            job.on( JobModel.PROGRESS_EVENT, function(percent) {
+            job.on( JobModelEvent.PROGRESS_EVENT, function(percent) {
                 percent.should.equal( 100 );
                 progress = percent;
             });
 
-            job.on( JobModel.STATUS_CHANGE_EVENT, function(status) {
+            job.on( JobModelEvent.STATUS_CHANGE_EVENT, function(status) {
                 if (status === JobModel.IDLE) {
                     should.exist( job.startTime );
                     should.exist( job.completedTime );
@@ -158,7 +159,7 @@ describe('JobModel', function() {
         it('should change status and fire an event on change', function(done) {
             var job = new JobModel();
 
-            job.on( JobModel.STATUS_CHANGE_EVENT, function(value) {
+            job.on( JobModelEvent.STATUS_CHANGE_EVENT, function(value) {
                 value.should.equal( JobModel.RUNNING );
                 job.getStatus().should.equal( JobModel.RUNNING );
 
@@ -171,7 +172,7 @@ describe('JobModel', function() {
         it('should ignore attempts to set to existing status', function() {
             var job = new JobModel({ status:JobModel.COMPLETE });
 
-            job.on( JobModel.STATUS_CHANGE_EVENT, function() {
+            job.on( JobModelEvent.STATUS_CHANGE_EVENT, function() {
                 throw new Error('should not fire an event');
             });
 
@@ -185,7 +186,7 @@ describe('JobModel', function() {
         it('should change priority and fire an event on change', function(done) {
             var job = new JobModel();
 
-            job.on( JobModel.PRIORITY_CHANGE_EVENT, function(value) {
+            job.on( JobModelEvent.PRIORITY_CHANGE_EVENT, function(value) {
                 value.should.equal( JobModel.HIGH_PRIORITY );
                 job.getPriority().should.equal( JobModel.HIGH_PRIORITY );
 
@@ -198,7 +199,7 @@ describe('JobModel', function() {
         it('should ignore attempts to set to existing priority', function() {
             var job = new JobModel({ priority:JobModel.LOW_PRIORITY });
 
-            job.on( JobModel.PRIORITY_CHANGE_EVENT, function() {
+            job.on( JobModelEvent.PRIORITY_CHANGE_EVENT, function() {
                 throw new Error('should not fire an event');
             });
 

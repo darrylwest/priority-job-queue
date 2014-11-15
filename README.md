@@ -101,6 +101,8 @@ The JobModel is a data model with run logic for the contained job.  The model co
 
 #### Events
 
+* JobModelEvent
+
 * STATUS\_CHANGE_EVENT - fired when a status changes
 * PRIORITY\_CHANGE_EVENT - fired when a priority is changed
 * PROGRESS\_EVENT - fired with a percent complete (by default only when the progress is 100%)
@@ -152,4 +154,4 @@ The example will run on port 3000.  If you have browserify installed you may mod
 Currently no mocks but the test/fixtures folder has a JobQueueDataset to create lists of jobs for testing. 
 
 - - -
-<p><small><em>copyright © 2014 rain city software | version 0.90.25</em></small></p>
+<p><small><em>copyright © 2014 rain city software | version 0.90.26</em></small></p>
