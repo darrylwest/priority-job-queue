@@ -83,6 +83,8 @@ The priority job queue object selects the highest priority job from the list and
 
 #### Events
 
+TickEvent class was added to separate the one second tick from the job queue.
+
 * JOB\_ADDED_EVENT - fired when a new job or a list of jobs are added to the queue
 * JOB\_REMOVED_EVENT - fired when a job is removed from the queue
 * ONE\_SECOND_TICK - fired each second when the real time ticker is running
@@ -99,9 +101,9 @@ The JobModel is a data model with run logic for the contained job.  The model co
 * getStatus() - return the current status
 * run() - run the job; this is called by the queue.
 
-#### Events
+#### JobModelEvent 
 
-* JobModelEvent
+JobModelEvent has it's own class to enable requiring the listeners for the event class without loading the model.
 
 * STATUS\_CHANGE_EVENT - fired when a status changes
 * PRIORITY\_CHANGE_EVENT - fired when a priority is changed
@@ -154,4 +156,4 @@ The example will run on port 3000.  If you have browserify installed you may mod
 Currently no mocks but the test/fixtures folder has a JobQueueDataset to create lists of jobs for testing. 
 
 - - -
-<p><small><em>copyright © 2014 rain city software | version 0.90.26</em></small></p>
+<p><small><em>copyright © 2014 rain city software | version 0.90.27</em></small></p>

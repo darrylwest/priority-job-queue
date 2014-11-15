@@ -5,7 +5,8 @@ module.exports = {
         JobModel: require('./lib/JobModel')
     },
     events:{
-        JobModelEvent: require('./lib/JobModelEvent')
+        JobModelEvent: require('./lib/JobModelEvent'),
+        TickEvent: require('./lib/TickEvent')
     }
 };
 
