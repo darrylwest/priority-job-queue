@@ -1,6 +1,6 @@
 {
   "name": "priority-job-queue",
-  "version": "00.90.27",
+  "version": "00.90.28",
   "description": "A client-side priority job queue",
   "main": "index.js",
   "repository": {
@@ -13,7 +13,8 @@
   "keywords": [
     "priority queue",
     "job",
-    "queue"
+    "queue",
+    "real-time-ticker"
   ],
   "dependencies": {
     "lodash": "~2.4.1",

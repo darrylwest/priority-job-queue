@@ -8,13 +8,15 @@ A client-side priority job queue.
 
 ## Overview
 
-Priority Job Queue iterates over a list of jobs to select the highest priority job to run.  When a job is selected, it's 'fn' method is called with optional args and callback.  The JobModel's status changes from 'queued' to 'running' and a status change event is fired.
+Priority Job Queue iterates over a list of jobs to select and run the highest priority job.  When a job is selected, it's 'fn' method is invoked with optional args and callback.  The JobModel's status changes from 'queued' to 'running' and a status change event is fired.
 
 When the job completes, the JobModel's status is changed to 'complete' and a status change is again fired.  The queue also fires a 'queue change' event when a job is removed from the queue.
 
 Typically jobs run serially but it's possible to run jobs in parallel by adding more than a single job to the JobModel.  This way, a set of jobs would run to completion before the next job or job set was run.
 
-_Although this module could be used server side, it was designed for client projects that use browserify..._
+The queue is controlled using a real-time clock that cycles each 1/10th of a second to inspect the queue status, find the highest priority job, and run it.  The real-time chain enables modifying the priority of specific jobs, either up or down after they are added to the queue.
+
+_Although this module could be used server side, it was designed for client projects that use browserify.  The ability to change priorities gives the user the ability to change the typical application behavior as they click through the application..._
 
 ## Installation
 
@@ -88,6 +90,8 @@ TickEvent class was added to separate the one second tick from the job queue.
 * JOB\_ADDED_EVENT - fired when a new job or a list of jobs are added to the queue
 * JOB\_REMOVED_EVENT - fired when a job is removed from the queue
 * ONE\_SECOND_TICK - fired each second when the real time ticker is running
+* ONE\_MINUTE_TICK - fired each minute when the real time ticker is running
+* ONE\_HOUR_TICK - fired each hour when the real time ticker is running
 
 ### JobModel
 
@@ -156,4 +160,4 @@ The example will run on port 3000.  If you have browserify installed you may mod
 Currently no mocks but the test/fixtures folder has a JobQueueDataset to create lists of jobs for testing. 
 
 - - -
-<p><small><em>copyright © 2014 rain city software | version 0.90.27</em></small></p>
+<p><small><em>copyright © 2014 rain city software | version 0.90.28</em></small></p>
