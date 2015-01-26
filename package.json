@@ -1,6 +1,6 @@
 {
   "name": "priority-job-queue",
-  "version": "00.90.29",
+  "version": "00.90.30",
   "description": "A client-side priority job queue",
   "main": "index.js",
   "repository": {
@@ -17,10 +17,10 @@
     "real-time-ticker"
   ],
   "dependencies": {
-    "lodash": "~2.4.1",
+    "lodash": "^3.0.0",
     "moment": "^2.8.1",
-    "node-uuid": "~1.4.1",
-    "simple-node-logger": "^0.92.10"
+    "node-uuid": "^1.4.1",
+    "simple-node-logger": "^0.92.15"
   },
   "devDependencies": {
     "casual": "~1.4.5",

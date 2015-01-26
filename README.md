@@ -160,4 +160,4 @@ The example will run on port 3000.  If you have browserify installed you may mod
 Currently no mocks but the test/fixtures folder has a JobQueueDataset to create lists of jobs for testing. 
 
 - - -
-<p><small><em>copyright © 2014 rain city software | version 0.90.29</em></small></p>
+<p><small><em>copyright © 2014-2015 rain city software | version 0.90.30</em></small></p>
